@@ -1,21 +1,31 @@
-{% extends "layout.html" %}
+{% extends "layout.html"%}
 {% block content %}
 
-<form action="/operasBas" method="post">
-  <div class="mb-3"> <label for="n1" class="form-label">Numero 1: </label>
-    <input type="number" class="form-control" id="n1" name="n1"> 
-  </div>
+<form action="/operasBas" method="POST">
+    <div class="mb-3">
+        <label for="n1" class="form-label">Numero 1: </label>
+        <input type="text" class="form-control" id="n1" name="n1">
+    </div>
 
-  <div class="mb-3"> <label for="n2" class="form-label">Numero 2: </label>
-    <input type="number" class="form-control" id="n2" name="n2">
-  </div>
-
-  <button type="submit" class="btn btn-primary">Calcular</button>
-  <label class = "form-label"> seleccione la opereacion: </label>
+    <div class="mb-3">
+        <label for="n2" class="form-label">Numero 2: </label>
+        <input type="text" class="form-control" id="n2" name="n2">
+    </div>
+    <div>
+        <label for="operas">Elige una operacion:</label>
+            <select id="opera" name="opera">
+            <option value="suma">Suma</option>
+            <option value="resta">Resta</option>
+            <option value="multip" >Multiplicacion</option>
+            <option value="division">Division</option>
+            </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Calcular</button>
 </form>
 
-<h1>
-    la suma de {{1}} + {{2}} es {{res}}
-</h1>
+<h2>
+    El resultado de la operación {{operacion}} entre {{n1}} y {{n2}} es: {{"%.2f"|format(res)}}
+</h2>
+
 
 {% endblock %}

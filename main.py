@@ -61,9 +61,10 @@ def operas():
 @app.route('/operasBas', methods=["GET", "POST"])
 def operas1():
     n1, n2, res = 0, 0, 0 # Valores por defecto
-    n1 = int(request.form.get('n1', 0))
-    n2 = int(request.form.get('n2', 0))
-    res = n1 + n2
+    if request.method == "POST":
+        n1 = float(request.form.get('n1'))
+        n2 = float(request.form.get('n2'))
+        res = n1 + n2
     return render_template('operasBas.html', n1 = n1, n2 = n2, res = res)
 
 @app.route('/resultado', methods=["GET", "POST"])
@@ -71,6 +72,23 @@ def resultado():
     n1 = request.form.get('n1')
     n2 = request.form.get('n2')
     return 'La suma es {}'.format(float(n1) + float(n2))
+
+@app.route("/alumnos", methods=["GET", "POST"])
+def alumnos():
+    return render_template("alumnos.html")
+
+@app.route('/distancia', methods=["GET", "POST"])
+def distancia():
+    n1, n2, n3, n4, res = 0, 0, 0, 0, 0
+    if request.method == "POST":
+        n1 = int(request.form.get('x1'))
+        n2 = int(request.form.get('x2'))
+        n3 = int(request.form.get('y1'))
+        n4 = int(request.form.get('y2'))
+
+        res = ((n2 - n1)**2 + (n3 - n4)**2) ** 0.5
+    return render_template('distancia.html', res = res)
+
 
 
 if __name__ == '__main__':
