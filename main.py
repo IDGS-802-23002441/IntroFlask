@@ -1,6 +1,15 @@
+from wtforms.validators import email
 from flask import Flask, render_template, request
+from flask import flash
+from flask_wtf.csrf import CSRFProtect
+
+import forms
+
 
 app = Flask(__name__)
+app.secret_key = 'clave secreta'
+csrf = CSRFProtect()
+
 
 @app.route('/')
 def index():
@@ -90,6 +99,27 @@ def distancia():
     return render_template('distancia.html', res = res)
 
 
-
+@app.route('/usuarios', methods=["GET", "POST"])
+def usuarios():
+    mat = 0
+    nom = ''
+    apa = ''
+    ama = ''
+    email = ''
+    usuario_class = forms.UserForm(request.form)
+    if request.method == 'POST' and usuario_class.validate():
+        mat = usuario_class.matricula.data
+        nom = usuario_class.nombre.data
+        apa = usuario_class.apaterno.data
+        ama = usuario_class.amaterno.data
+        email = usuario_class.correo.data
+        
+        mensaje = 'bienvenido {}'.format(nom)
+        flash(mensaje)
+    return render_template("usuario.html",form = usuario_class
+                           , mat = mat, nom = nom, apa = apa, ama = ama, email = email
+                           )
+    
 if __name__ == '__main__':
+    csrf.init_app(app)
     app.run(debug=True)

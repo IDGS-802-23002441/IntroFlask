@@ -1,0 +1,17 @@
+{% extends "layoutCine.html" %}
+{% import "macro_cine.html" as macros %}
+
+{% block content %}
+<form action="/CINECO" method="post">
+
+  {{ macros.datos("nombre", "Ingrese su nombre", "text") }}
+  {{ macros.boletos("boletos", "Ingrese el número de boletos") }}
+  {{ macros.datos("metodoPago", "Ingrese el método de pago (CINECO o EFECTIVO)", "text") }}
+
+  <button type="submit" class="btn btn-primary">Calcular</button>
+</form>
+<h2>
+    El total a pagar es de: {{costoBoletos}}, orden de {{nombre}} con {{numeroBoletos}} boletos.
+</h2>
+
+{% endblock %}
