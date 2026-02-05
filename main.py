@@ -2,7 +2,6 @@ from wtforms.validators import email
 from flask import Flask, render_template, request
 from flask import flash
 from flask_wtf.csrf import CSRFProtect
-
 import forms
 
 
@@ -120,6 +119,31 @@ def usuarios():
                            , mat = mat, nom = nom, apa = apa, ama = ama, email = email
                            )
     
+    
+@app.route('/CINECO', methods=["GET", "POST"])
+def cineco():
+    numeroBoletos, costoBoletos = 0, 0
+    metodoPago, nombre = "", ""
+    cine_class = forms.cine_form(request.form);
+    if request.method == "POST" and cine_class.validate():
+        numeroBoletos = cine_class.boletos.data
+        metodoPago = cine_class.metodoPago.data
+        nombre = cine_class.nombre.data
+        personas = cine_class.personas.data
+        costoBoletos = 12 * numeroBoletos
+        if numeroBoletos > 5:
+            costoBoletos *= 0.85 
+        elif numeroBoletos >= 3:
+            costoBoletos *= 0.90  
+        if metodoPago == "CINECO":
+            costoBoletos *= .90  
+
+    mensaje = 'bienvenido el costo del boleto es de 12.00'
+    flash(mensaje)
+    return render_template('cinepolis.html', form = cine_class, numeroBoletos = numeroBoletos, costoBoletos = costoBoletos, nombre = nombre)
+
+    
 if __name__ == '__main__':
     csrf.init_app(app)
     app.run(debug=True)
+    

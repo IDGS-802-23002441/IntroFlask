@@ -1,0 +1,26 @@
+ body {
+            background-image: url("https://www.sdpnoticias.com/resizer/v2/PMV3SX3225BVPLSMVDIPHVPX34.png?smart=true&auth=dd6bb2eb34cdc76d269a72ee36fdc45c3ad319913941532405d62faeccbd5bfd&width=1440&height=810");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            font-family: Arial, sans-serif;
+         }
+        .app-container {
+            width: 850px;
+            margin: 40px auto;
+            background-color: rgba(31, 79, 178, 0.9); 
+            border: 2px solid white;
+            padding: 20px;
+            color: white;
+        }
+
+        .panel {
+            border: 2px solid white;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .acciones {
+            text-align: center;
+            margin-top: 20px;
+        }

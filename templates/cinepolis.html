@@ -2,16 +2,37 @@
 {% import "macro_cine.html" as macros %}
 
 {% block content %}
-<form action="/CINECO" method="post">
+<form action="/CINECO" method="post" novalidate>
 
-  {{ macros.datos("nombre", "Ingrese su nombre", "text") }}
-  {{ macros.boletos("boletos", "Ingrese el número de boletos") }}
-  {{ macros.datos("metodoPago", "Ingrese el método de pago (CINECO o EFECTIVO)", "text") }}
+    {{ form.csrf_token }}
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div class="row">
+        <div class="col-md-6 panel">
+            <h5>Entradas</h5>
 
-  <button type="submit" class="btn btn-primary">Calcular</button>
+            {{ macros.campoNuevo(form.nombre, class="form-control") }}
+            {{ macros.campoNuevo(form.personas, class="form-control", type="number") }}
+            {{ macros.campoNuevo(form.boletos, class="form-control", type="number") }}
+
+            <label>Tarjeta Cineco</label>
+            {{ macros.campoNuevo(form.metodoPago) }}
+        </div>
+
+        <div class="col-md-6 panel">
+            <h5>Salidas</h5>
+
+            <label>Valor a pagar</label>
+            <input type="text" class="form-control"
+                   value="{{ costoBoletos }}"
+                   readonly>
+        </div>
+    </div>
+
+    <div class="acciones">
+        <button type="submit" class="btn btn-light">Procesar</button>
+        <a href="/" class="btn btn-secondary">Salir</a>
+    </div>
+
 </form>
-<h2>
-    El total a pagar es de: {{costoBoletos}}, orden de {{nombre}} con {{numeroBoletos}} boletos.
-</h2>
 
 {% endblock %}
